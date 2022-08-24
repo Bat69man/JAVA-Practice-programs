@@ -1,0 +1,429 @@
+A thread is a smallest part/unit in execution.
+
+A thread is an independent part of execution within a program
+
+Every thread in java is created and controlled by the java.lang.Thread class
+
+OS manages all the processes running at a same time.
+
+Some operations are independent to each other so they can be executed parallely.
+
+In multiprocessor system, threads can actually run concurrently or parallely.
+
+Many threads can run parallely and concurrently within a program
+
+Multithreading refers to two or more tasks executing concurrently within a single program.
+
+2 ways to perfom Multithreading in java
+1) Implimenting 'Runnable' interface
+2) Extending 'Thread' class
+
+Thread class implements runnable interface
+Runnable is a functional interface, it only has one abstract method run().
+
+=> Common methods of Thread are:
+
+Constructors:
+
+	Thread()
+	Thread(Runnable ref)
+	Thread(Runnable ref, String name)
+
+class base{
+    private int a,b;
+
+    public base(){}
+    public base(int a, int b){
+        this.a = a;
+        this.b = b;
+    }
+}
+class child extends base{
+    private int c,d;
+
+    public child(){}
+    public child(int a,int b,int c,int d){
+        super(a,b)
+        this.c = c;
+        this.d = d;
+    }
+}
+
+main(){
+    child c = new child(10,20,30,40);
+}
+
+run()
+start()
+getId()
+getName()
+getPriority()
+getState()
+setName()
+setPriority()
+join()  // Waits for current thread to die
+sleep( long milliseconds )
+isIntruppted()
+isAlive()
+currentThread()  // Returns a reference to the currently executing thread object.
+wait() 		// Object class's methods
+notify()	// Object class's methods
+
+There are 3 steps to perfom Multithreading in java
+1) we have to make an object of thread 
+2) we have to attach a piece of code to the thread
+3) Run Thread
+
+************** USING RUNNABLE INTERFACE ***************
+
+/* To attach code with the threads, we have to make seprate class which will hold the piece of code to be attached with thred. */
+
+class A implements Runnable {
+ 
+    /* Overriding run method of Runnable interface */
+
+    public void run() {
+        for(short i=0 ; i<10 ; i++)
+            System.out.print("\n Class A: " + i);
+    }
+    
+    /* when run function ends, execution of thread is over */
+
+}
+
+class B implements Runnable {
+
+    public void run() {
+        for(short i=0 ; i<10 ; i++)
+            System.out.print("\n Class B: " + i);
+    }
+}
+
+public class Main {
+    public static void main (String args[]) {
+        
+        /*
+            Since Thread class is already defined in java.
+            it's constructors are also pre-defined, and one of the constructor has reference variable of interface Runnable type.
+            So it can reffer all it's child class's objects and can invoke only run method which is defined in Runnable interface.
+        */
+
+        // creating new objects
+        Thread t1 = new Thread (new A());
+        B obj = new B();
+        Thread t2 = new Thread (obj);
+
+        // our both thread are ready now to be executed.
+        
+        t1.start();
+        t2.start();
+
+        /* run this program more than one time and you will get random outputs */
+    }
+}
+
+************** USING THREAD CLASS ***************
+
+/* To attach code with the threads, we have to make seprate class which will hold the piece of code to be attached with thred. */
+
+class C extends Thread {
+ 
+    /* Overriding run method of Class Thread */
+
+    public void run() {
+        for(short i=0 ; i<10 ; i++)
+            System.out.print("\n Class C: " + i);
+    }
+
+    /* when run function ends, execution of thread is over */
+}
+
+class D extends Thread {
+
+    public void run() {
+        for(short i=0 ; i<10 ; i++)
+            System.out.print("\n Class D: " + i);
+    }
+}
+
+public class Ex2 {
+    public static void main (String args[]) {
+
+        /* 
+        here we are making object of class C & D because now we don't need to make object of Thread class unlike last example, because we are already extending Thread class in those classes 
+        */
+
+        C t1 = new C();
+        D t2 = new D();
+        
+        // our both thread are ready now to be executed.
+        
+        t1.start();
+        t2.start();
+
+        /* run this program more than one time and you will get random outputs */
+    }
+}
+******************************************************
+
+Its always advisable to use Runnable interface instrad of Thread class because if we implement Runnable interface, we have a window to extend any class as well.
+
+In thread life cycle there are 4 states
+
+1) New Thread state
+
+    Athread is in this state when the instantiation of a Thread object creates a new thread but does not start it running.
+
+    Athread starts life in the Ready-to-run state.
+
+    You can call only the start() or stop() methods when the thread is in this state.
+
+    Calling any method besides start()or stop() causes an IllegalThreadState Exception.(A descendant class of RuntimeException)
+
+2) Runnable
+    
+    When the start()method is invoked on a New Thread()it gets to the runnable state or running state by calling the run() method.
+    
+    A Runnable thread may actually be running, or may be awaiting its turn to run.
+
+3) Not Runnable
+    
+    => A thread becomes Not Runnable when one of the following 4 events occurs:
+        
+        When sleep() method is invoked and it sleeps for a specified amount of time.
+
+        When suspend() method is invoked. Its depricated though
+        
+        When the wait() method is invoked and the thread waits for notification of a free resource or waits for the completion of another thread or waits to acquire a lock of an object.
+        
+        The thread is blocking on I/O and waits for its completion
+
+
+    => Switching from not runnable to runnable
+
+        If a thread has been put to sleep, then the specified number of milliseconds must elapse (or it must be interrupted )
+        
+        If a thread has been suspended, then its resume()method must be invoked
+   
+        If a thread is waiting on a condition variable, whatever object owns the variable must relinquish it by calling either notify() or notifyAll().
+   
+        If a thread is blocked on I/O, then the I/O must complete.
+
+4) Dead/Terminated
+
+    A thread enters this state when the run() method has finished executing or when the stop() method is invoked. Once in this state, the thread cannot ever run again.
+
+
+
+
+
+************ THREAD PRIORITY ************
+
+In Java we can specify the priority of each thread relative to other threads.
+
+Those threads having higher priority get greater access to available resources then lower priority threads.
+
+A Java thread inherits its priority from the thread that created it.
+
+Default priority of thread is 5. Max priority is 10 and Minimum is 0.
+
+Higher the number, higher the priority.
+
+You can modify a thread's priority at any time after its creation using the set Priority() method and retrieve the thread priority value using getPriority() method.
+
+The following static final integer constants are defined in the Thread class:
+    MIN_PRIORITY(0)Lowest Priority
+    NORM_PRIORITY(5)Default Priority
+    MAX_PRIORITY(10)Highest Priority
+
+/********* SET/GET PRIORITY OF THREAD  **********/
+
+class F extends Thread {
+    public void run() {
+        for(short i=0 ; i<10 ; i++)
+            System.out.print("\n Class F: " + i);
+    }
+}
+
+class E extends Thread {
+    public void run() {
+        for(short i=0 ; i<10 ; i++)
+            System.out.print("\n Class E: " + i);
+    }
+}
+
+public class Ex3 {
+    public static void main (String args[]) {
+
+        E t1 = new E();
+        F t2 = new F();
+
+        System.out.println(" Priority of t1 (E): "+t1.getPriority());
+        System.out.println(" Priority of t2 (F): "+t2.getPriority()+"\n");
+
+        t2.setPriority(t2.getPriority() + 2);
+
+        System.out.println(" Priority of t1 (E): "+t1.getPriority());
+        System.out.println(" Priority of t2 (F): "+t2.getPriority()+"\n");
+        
+        t2.start();
+        t1.start();
+    }
+}
+******************************************************
+
+
+
+
+*********** SYNCHRONIZING THREADS IN JAVA ***********
+
+video link: https://www.youtube.com/watch?v=Gd3OimeT0hA&list=PLX9Zi6XTqOKQ7TdRz0QynGIKuMV9Q2H8E&index=41&ab_channel=JavabySaurabhShuklaSir
+
+We have to perform synchronization, when multiple threads are using shared resources.
+
+Same problem we have already learnt in DBMS called 'Bad Read' etc.
+
+One way of doing it is only one thread can use a resouce at a time (Lock).
+
+------------ C O D E --------------
+import java.util.Scanner;
+
+class Account {
+
+    private int balance;
+
+    public Account(){}
+    public Account(int balance) {
+        this.balance = balance; 
+    }
+    public boolean isSufficiantBal(int withdraw) {
+        return (balance >= withdraw)? true : false;
+    }
+    public void withdraw(int withdrawl) {
+        balance -= withdrawl;
+    }
+    public int getBalance() { return balance; }
+}
+
+class Customer implements Runnable {
+
+    private int id;
+    private String name;
+    private Account acc;
+
+    public Customer() {}
+    public Customer(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+    public Customer(Account a) { 
+        acc=a; 
+    }
+    public Customer(int id, String name, Account account) {
+        this.id = id;
+        this.name = name;
+        this.acc = account;
+    }
+
+    public void run() 
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("\n "+name+"\n Enter amount to withdraw: ");
+        int amount = sc.nextInt();
+
+        if(acc.isSufficiantBal(amount)) {
+            acc.withdraw(amount);
+            System.out.println("\n "+name+",\n Rs."+amount+" is withdrawn");
+            System.out.println("\n After withdrawing Rs."+amount+",\n Balance is: Rs." + acc.getBalance());
+        }
+        else
+            System.out.println("\n "+name+",\n  insufficiant balance: Rs."+acc.getBalance());
+    }   
+}
+
+public class Ex4 {
+    public static void main(String[] args) {
+        
+        // creating new account
+        Account a1 = new Account(1000);
+        
+        // both customers will share same account
+        Customer c1 = new Customer(33,"Dharmil Shah",a1);
+        Customer c2 = new Customer(52,"Hiren Manvani",a1);
+        
+        // creating threads for customers
+        Thread t1 = new Thread(c1);
+        Thread t2 = new Thread(c2);
+        
+        t1.start();
+        t2.start();
+    }
+}
+
+---------- O U T O U T ----------
+D:\VsCode\Java\Threads>java Ex4
+
+ Mr.Hiren Manvani
+ Enter amount to withdraw: 
+ Mr.Dharmil Shah
+ Enter amount to withdraw: 650
+750
+
+ Mr.Dharmil Shah,
+ Rs.750 is withdrawn      
+
+ Mr.Hiren Manvani,        
+ Rs.650 is withdrawn      
+
+ After withdrawing Rs.750,
+ Balance is: Rs.-400      
+
+ After withdrawing Rs.650,
+ Balance is: Rs.-400
+
+---------------------------------------------
+
+See the problem ? thats why we need synchronization.
+
+We will use 'synchronized' keyword to do that.
+
+The portion of code, which we want to make synchronize, will be written inside the 'synchronized' block.
+
+Synchronized block takes a resouce as an argument, means we have to mention the resouce as a parameter on which we want synchronization.
+
+So here is a solution of that,
+
+    //inside run function
+    synchronized(acc) // acc is a shared resouce here
+    {
+        System.out.print("\n "+name+"\n Enter amount to withdraw: ");
+        int amount = sc.nextInt();
+        
+        if(acc.isSufficiantBal(amount)) {
+            acc.withdraw(amount);
+            System.out.println("\n "+name+",\n Rs."+amount+" is withdrawn");
+            System.out.println("\n After withdrawing Rs."+amount+",\n Balance is: Rs." + acc.getBalance());
+        }
+        else
+            System.out.println("\n "+name+",\n  insufficiant balance: Rs."+acc.getBalance());
+    }
+
+Now, if any thread starts processing synchronized portion, no other thread can asscess that part or resouce.
+
+---------- NEW OUTPUT ----------
+D:\VsCode\Java\Threads>java Ex4                    
+
+ Hiren Manvani
+ Enter amount to withdraw: 800
+
+ Hiren Manvani,     
+ Rs.800 is withdrawn
+                                                   
+ After withdrawing Rs.800, 
+ Balance is: Rs.200        
+
+ Dharmil Shah
+ Enter amount to withdraw: 500
+
+ Dharmil Shah,
+ insufficiant balance: Rs.200
