@@ -1,0 +1,211 @@
+Variables and its data are destroyed as soon as program is terminated. Life of a variable can not be greater than the program so it can't hold value permenantly.
+
+Some data/information is need to be stored permenantly.
+
+To store data permenantly, we store it in form of different files inside storage devices like HDD etc.
+
+--------------------------------
+
+The java.io package contains nearly every class you might ever need to perform input and output (I/O) in Java.
+
+All these streams represent an input source and an output destination.
+
+Java provides strong but flexible support for I/O related to Files
+
+File handling is an integral part of nearly all programming projects.
+Files provide the means by which a program stores data.
+
+------------------------------------
+
+>>>> STREAMS <<<<
+
+  Streams represents a Source (which generates the data in the form of Stream) and/or a destination (which consumes or read data available as Stream).
+
+  Streams supports a huge range of source and destinations including disk file, arrays, other devices, other programs etc.
+
+  Stream matlab bahaav. sequence of data, means its in a particular sequence and you can not pick data randomly from any position in stream.
+
+  Like convay belt at airport is a stream and luggage are data.
+
+  In file handling, if data is going to file then its output stream, if data is coming from file then its input stream.
+
+  Stream also represents the source of data or destination of data like Files.
+
+>>> TYPES OF STREAM
+
+  Modern versions of Java define two types of streams: 
+  1) byte
+  2) character
+
+  Byte streams provide a convenient means for handling input and output of bytes.
+  Byte stream contains raw data (bytes)(0s & 1s) in stream instead of any character or number.
+
+  Character streams are designed for handling the input and output of characters.
+  It represents data as a character instead of bits.
+  Basically character stream is a extension/wrapped version of byte stream since it gives us the whole character together.
+
+----------------------------------------
+
+>>>> FILE CLASS IN JAVA <<<<
+
+  web: https://www.javatpoint.com/java-file-class
+
+
+  FileInputStream
+  FileOutputStream
+
+  Hello World
+
+  FileReader
+  FileWriter
+
+
+  java.io.File is where File class is stored.
+
+  Information about the file like pathname, permissions, author, users, size, type etc are called 'Metadata' of a file and each file has 'Data' and 'Metadata'.
+
+  In java, File class's object represents file's Metadata. By using File object we access Metadata of file.
+
+  Syntax:
+    File objectName = new File("pathname");
+    File f = new File("test.txt");
+
+  Functions:
+    f.exists()
+    f.createNewFile()
+    f.length()
+    f.getName()
+    f.getAbsolutePath()
+    f.canRead()
+    f.canWrite()
+    f.canExecute()
+    f.delete()
+    f.list()
+    f.listFiles()
+    f.isFile()
+    f.isDirectory()
+    etc.
+
+--------------------------------------
+>>> Writing in file using 'FileOutputStream' class
+
+FileOutputStream is meant for writing streams of raw bytes
+
+FileOutputStream is subclass of an abstract class 'OutputStream'.
+
+===> Constuctors of FileOutputStream Class
+
+  FileOutputStream(File file)
+    Creates a file output stream to write to the file represented by the specified File object.
+  
+  FileOutputStream(File file, boolean append)
+    Creates a file output stream to write to the file represented by the specified File object.
+  
+  FileOutputStream(String name)
+    Creates a file output stream to write to the file with the specified name/path.
+
+  FileOutputStream(String name,boolean append)
+    Creates a file output stream to write to the file with the specified name. 
+
+  Functions:
+    write()
+    close()
+    etc.
+
+-------------------------------------
+>>> Reading data from file using FileInputStream
+  
+  link: https://www.geeksforgeeks.org/java-io-fileinputstream-class-java/
+  
+  Java FileInputStream class obtains input bytes from a file. It is used for reading byte-oriented data (streams of raw bytes) such as image data, audio, video etc. 
+  
+  You can also read character-stream data. But, for reading streams of characters, it is recommended to use FileReader class.
+
+  Object of FileInputStream reads data from memory buffer where data is temorarily stored.
+
+  FileInputStream(File file)
+    Creates a FileInputStream by opening a connection to an actual file,the file named by the File object file in the file system
+  
+  FileInputStream(String name)
+    Creates a FileInputStream by opening a connection to an actual file,the file named by the path name name in the file system.
+
+-------------------------------------------
+
+>>> BufferedWriter class in java
+
+  Instead of writing single characters one-by-one in File, it stores bunch of characters in a temporary buffer.
+
+  And when that buffer is full, it empties the buffer and write that bunch of characters into the file together.
+
+  So its faster then FileOutputStream.
+
+  ex.>>
+
+    FileWrite fw = rnew FileWriter("filepath",true);
+    BufferedWriter bf = new BufferedWriter(fw);
+    bf.write("Hello World !");
+    bf.close();
+
+  link: https://www.youtube.com/watch?v=deiJCWfDv3c&list=PLX9Zi6XTqOKQ7TdRz0QynGIKuMV9Q2H8E&index=46&ab_channel=JavabySaurabhShuklaSir
+
+-----------------------------------------------
+
+>>> BufferedReader class in java
+
+  It reads bunch of characters/data from the file and put it into a buffer.
+  
+  When buffer is filled, all the data from the buffer is transffered to our programm, and buffer is filled with new data again.
+
+  Buffer size may be specified of default.
+
+  Constuctors:
+
+    BufferedReader(Reader in)
+      Creates a buffering character-input stream that uses a default-sized input buffer.
+    
+    BufferedReader(Reader in, int bufferSize)
+      Creates a buffering character-input stream that uses an input buffer of specified size.
+
+  Functions:
+    int read() // read single character
+    String readLine() // reads a line of text
+
+  ex.>>
+
+    FileReader fr = new FileReader("filepath");
+    BufferedReader bf = new BufferedReader(fr);
+
+    /******
+    char [] array = new char[20];
+    bf.read(array, 0, 20);
+            or
+    bf.read(array, 0, array.length);
+    System.out.println(array);
+    
+    Arguments:
+    1) name of character array
+    2) starting index from wich characters will be stored
+    3) how many characters to be read from file.
+    ******/
+
+    String line;
+    while ( (line = bf.readLine()) != null )
+      System.out.println(line);
+
+    bf.close();
+
+-------------------------------------
+java.io.
+
+File
+
+Byte stream:
+  FileInputStream
+  FileOutputStream
+
+Character stream
+  FileReader
+  FileWriter
+
+  BufferdWriter
+  BufferdReader
