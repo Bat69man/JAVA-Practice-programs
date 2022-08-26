@@ -17,6 +17,9 @@ public class MissingValues {
                 }
             }
         }
+        if( !missingVals.isEmpty() ){
+            return missingVals.substring(0,missingVals.length()-1);
+        }
         return missingVals.toString();
     }
 }

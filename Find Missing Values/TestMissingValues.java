@@ -22,6 +22,6 @@ public class TestMissingValues {
 
     @Test
     public void inputWithMissingValues(){
-        assertEquals("String with missing values should return all those missing values","3 6 7",object.findMissingValues("1 2 4 5 8"));
+        assertEquals("String with missing values should return all those missing values","3 6 7",object.findMissingValues("1 2 4 5 8"));    
     }
 }
