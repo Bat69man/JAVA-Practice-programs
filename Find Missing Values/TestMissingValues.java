@@ -29,4 +29,11 @@ public class TestMissingValues {
     public void inputStringInRandomOrder(){
         assertEquals("String input with random numbers should return missing values in proper format","-1 0 1 2 3 5",object.findMissingValues("4 6 -2"));
     }
+
+    @Test
+    public void nonDigitInputShouldThrowExceprion(){
+        Exception e = assertThrows(IllegalArgumentException.class, 
+                    ()->{ object.findMissingValues("1 a 2"); });
+        assertEquals("Non Digit values are not allowed !", e.getMessage());
+    }
 }
