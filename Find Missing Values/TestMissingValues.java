@@ -31,9 +31,9 @@ public class TestMissingValues {
     }
 
     @Test
-    public void nonDigitInputShouldThrowExceprion(){
+    public void nonDigitInputShouldThrowException(){
         Exception e = assertThrows(IllegalArgumentException.class, 
-                    ()->{ object.findMissingValues("1 a 2"); });
+                    ()->{ object.findMissingValues("1 2 3 afsfa ., 7sdfsfd 9)*"); });
         assertEquals("Non Digit values are not allowed !", e.getMessage());
     }
 }
