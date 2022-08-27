@@ -1,4 +1,4 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class TestMissingValues {
@@ -22,6 +22,11 @@ public class TestMissingValues {
 
     @Test
     public void inputWithMissingValues(){
-        assertEquals("String with missing values should return all those missing values","3 6 7",object.findMissingValues("1 2 4 5 8"));    
+        assertEquals("String with missing values should return all those missing values","2 3 4 6 7 8 9",object.findMissingValues("1 5 10"));
+    }
+
+    @Test
+    public void inputStringInRandomOrder(){
+        assertEquals("String input with random numbers should return missing values in proper format","-1 0 1 2 3 5",object.findMissingValues("4 6 -2"));
     }
 }

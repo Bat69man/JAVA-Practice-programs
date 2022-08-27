@@ -1,25 +1,28 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.StringTokenizer;
 
 public class MissingValues {
-    public String findMissingValues(String inputString){
-        inputString = inputString.trim();
-        if(inputString == "" || inputString.isEmpty()){
-            return "";
+    
+    private ArrayList<Integer> splitAndSortIntoArrayList(String inputString){
+        StringTokenizer stringTokens = new StringTokenizer(inputString," ");
+        ArrayList<Integer> intTokens = new ArrayList<Integer>();
+        while(stringTokens.hasMoreTokens()){
+            intTokens.add(Integer.parseInt(stringTokens.nextToken()));
         }
-        
-        String []tokens = inputString.split(" ");
+        Collections.sort(intTokens);
+        return intTokens;
+    }
+    
+    public String findMissingValues(String inputString){
+        ArrayList<Integer> tokens = splitAndSortIntoArrayList(inputString);
         StringBuilder missingVals = new StringBuilder("");
-
-        for(int i=Integer.parseInt(tokens[0]) ; i<tokens.length-1 ; i++){
-            int value = Integer.parseInt(tokens[i]);
-            if(value+1 != Integer.parseInt(tokens[i+1])){
-                for(int j=value+1 ; j!=Integer.parseInt(tokens[i+1]) ; j++){
-                    missingVals.append(j+" ");
-                }
+    
+        for(int i=0 ; i<tokens.size()-1 ; i++){
+            for(int j=tokens.get(i)+1 ; j<tokens.get(i+1) ; j++){
+                missingVals.append(j+" ");
             }
         }
-        if( !missingVals.isEmpty() ){
-            return missingVals.substring(0,missingVals.length()-1);
-        }
-        return missingVals.toString();
+        return missingVals.toString().trim();
     }
 }
