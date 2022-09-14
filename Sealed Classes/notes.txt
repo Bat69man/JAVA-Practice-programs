@@ -1,0 +1,27 @@
+abstract classes are meant to be inherited.
+without inheriting it into concrete classes, we can not use it.
+
+final classes are meant not to be inherited.
+no other class can inherit it.
+
+normal classes can be inherited by any classes according to its access modifier
+
+SEALED CLASSES:
+
+    - what if we want something inbetween ?
+
+    - from JAVA 17, we have concept of sealed classes.
+    
+    - using sealed classes we can mention which are the sub-classes/sub-interfaces  can inherite a particular class. 'sealed' keyword is used here.
+
+    Syntax:
+        sealed class className permits class_1,... class_n { //class body }
+    
+    - it is mendatory to list all the permited classes/interfaces followed by 'permits' keyword.
+
+    - it will give compilation ERROR if:
+
+        1) permitted classes/interfaces does not extends it.
+        2) we have not declared permits if its a sealed class.
+        3) after extending sealed class in permitted class, we haven't specified the access modifiers like 'sealed', 'non-sealed' or 'final'
+        4) any non-permitted entity extends 
